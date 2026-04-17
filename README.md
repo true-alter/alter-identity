@@ -6,6 +6,7 @@ ALTER Identity SDK — query the continuous identity field from any JavaScript/T
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![CI](https://github.com/true-alter/alter-identity/actions/workflows/ci.yml/badge.svg)](https://github.com/true-alter/alter-identity/actions/workflows/ci.yml)
 [![Node](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg)](#api)
+[![Glama score](https://glama.ai/mcp/servers/true-alter/alter-identity/badges/score.svg)](https://glama.ai/mcp/servers/true-alter/alter-identity)
 
 > **Install:** `npm install @truealter/sdk`
 > **Publish channel:** this repository is the public source mirror of the SDK that ships as [`@truealter/sdk`](https://www.npmjs.com/package/@truealter/sdk) on npm. The canonical build + publish flow lives in ALTER's monorepo — PRs and issues are welcome here; upstream sync happens on each tagged release.
