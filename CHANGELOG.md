@@ -5,6 +5,18 @@ All notable changes to `@truealter/sdk` (formerly `@alter/identity`, renamed 202
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `CONTRIBUTING.md` — workflow, scope, and back-port policy for the
+  public source mirror.
+- `SECURITY.md` — disclosure address (`security@truealter.com`), scope
+  boundaries, and a short summary of prior hardening already shipped in
+  the SDK.
+- README: CI + Node version badges; Docker usage section; Contributing
+  and Security sections linking to the new meta files.
+
 ## [0.2.1] — 2026-04-15
 
 ### Removed

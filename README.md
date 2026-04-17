@@ -4,6 +4,8 @@ ALTER Identity SDK — query the continuous identity field from any JavaScript/T
 
 [![npm version](https://img.shields.io/npm/v/@truealter/sdk.svg)](https://www.npmjs.com/package/@truealter/sdk)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+[![CI](https://github.com/true-alter/alter-identity/actions/workflows/ci.yml/badge.svg)](https://github.com/true-alter/alter-identity/actions/workflows/ci.yml)
+[![Node](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg)](#api)
 
 > **Install:** `npm install @truealter/sdk`
 > **Publish channel:** this repository is the public source mirror of the SDK that ships as [`@truealter/sdk`](https://www.npmjs.com/package/@truealter/sdk) on npm. The canonical build + publish flow lives in ALTER's monorepo — PRs and issues are welcome here; upstream sync happens on each tagged release.
@@ -429,6 +431,23 @@ Until then, use `endpoint: "https://mcp.truealter.com/api/v1/mcp"` (the default)
 | `compute_belonging`        | L4   | $0.05   | Compute belonging probability for a person-job pairing (authenticity, acceptance, complementarity).        |
 | `get_match_recommendations`| L5   | $0.50   | Get top N match recommendations for a person, ranked by composite score with quality tiers.                |
 | `generate_match_narrative` | L5   | $0.50   | Generate a human-readable narrative explaining a specific match — strengths, growth areas, belonging.         |
+
+## Docker
+
+A `Dockerfile` is supplied for container-based consumers — primarily so the SDK binaries (`alter-identity`, `alter-mcp-bridge`) can be published to the Glama server-tier listing. For library usage you almost certainly want `npm install @truealter/sdk` directly, not the container.
+
+```bash
+docker build -t alter-identity .
+docker run --rm alter-identity alter-identity verify ~truealter
+```
+
+## Contributing
+
+Bug reports and small patches welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md). This repository is a public source mirror; the canonical build lives in ALTER's monorepo, and merged PRs are back-ported on each tagged release.
+
+## Security
+
+Report vulnerabilities to **security@truealter.com** — see [SECURITY.md](./SECURITY.md) for scope and the coordinated disclosure policy. Please do not open public issues for security bugs.
 
 ## License
 
