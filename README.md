@@ -12,9 +12,10 @@ ALTER Identity SDK — query the continuous identity field from any JavaScript/T
 
 A thin client over the ALTER MCP server (Streamable HTTP, JSON-RPC 2.0, MCP spec `2025-11-25`) with x402 micropayment support, ES256 provenance verification, and config generators for Claude Code, Cursor, and generic MCP clients.
 
-- **Live MCP endpoint:** `https://mcp.truealter.com`
+- **Branded host:** `https://mcp.truealter.com` (serves `.well-known/mcp.json` for discovery)
+- **JSON-RPC wire endpoint:** `https://mcp.truealter.com/api/v1/mcp` — this is what Streamable HTTP POSTs target (the SDK default); bare host returns 405
 - **Wire protocol:** Streamable HTTP, JSON-RPC 2.0, MCP `2025-11-25` (server negotiates `2025-06-18` + `2025-03-26` for backwards-compatible clients)
-- **Tools:** 37 total — 25 free (L0) + 12 premium (L1–L5)
+- **Tools:** 32 typed and wired — 24 free (L0) + 8 premium (L1–L5). Mirrors the live server's `tools/list` response byte-for-byte
 - **Runtime:** Node 18+, Deno, Bun, Cloudflare Workers, modern browsers
 - **Crypto:** `@noble/ed25519` + `@noble/hashes` (no other dependencies)
 - **Bundle:** ESM + CJS dual output
@@ -41,7 +42,7 @@ Reference: Morrison, B. (2026). *Identity Field Theory: A Continuous Field Model
 import { AlterClient, X402Client } from "@truealter/sdk";
 
 const alter = new AlterClient({
-  endpoint: "https://mcp.truealter.com", // optional — defaults to mcp.truealter.com
+  endpoint: "https://mcp.truealter.com/api/v1/mcp", // optional — this is the default; bare host returns 405
   apiKey: process.env.ALTER_API_KEY,     // optional for free tier
   x402: new X402Client({                  // optional — only required for premium tools
     signer: yourViemOrEthersSigner,
@@ -144,7 +145,7 @@ import { discover } from "@truealter/sdk";
 
 // Three-step discovery cascade: DNS TXT → mcp.json → alter.json
 const descriptor = await discover("truealter.com");
-// → { url: "https://mcp.truealter.com", transport, source, publicKey, x402Contract, capability }
+// → { url: "https://mcp.truealter.com/api/v1/mcp", transport, source, publicKey, x402Contract, capability }
 ```
 
 ### Low-level MCPClient
@@ -152,7 +153,7 @@ const descriptor = await discover("truealter.com");
 ```ts
 import { MCPClient } from "@truealter/sdk";
 
-const mcp = new MCPClient({ endpoint: "https://mcp.truealter.com" });
+const mcp = new MCPClient({ endpoint: "https://mcp.truealter.com/api/v1/mcp" });
 await mcp.initialize();
 const tools = await mcp.listTools();
 const response = await mcp.callTool("verify_identity", {
@@ -171,7 +172,7 @@ import { generateClaudeConfig } from "@truealter/sdk";
 import { writeFileSync } from "node:fs";
 
 const config = generateClaudeConfig({
-  endpoint: "https://mcp.truealter.com",
+  endpoint: "https://mcp.truealter.com/api/v1/mcp",
   apiKey: process.env.ALTER_API_KEY,
 });
 
@@ -184,7 +185,7 @@ Resulting `.mcp.json`:
 {
   "mcpServers": {
     "alter": {
-      "url": "https://mcp.truealter.com",
+      "url": "https://mcp.truealter.com/api/v1/mcp",
       "transport": "streamable-http",
       "description": "ALTER Identity — psychometric identity field for AI agents",
       "headers": {
@@ -202,7 +203,7 @@ import { generateCursorConfig } from "@truealter/sdk";
 import { writeFileSync } from "node:fs";
 
 const config = generateCursorConfig({
-  endpoint: "https://mcp.truealter.com",
+  endpoint: "https://mcp.truealter.com/api/v1/mcp",
   apiKey: process.env.ALTER_API_KEY,
 });
 
@@ -215,7 +216,7 @@ writeFileSync(".cursor/mcp.json", JSON.stringify(config, null, 2));
 import { generateGenericMcpConfig } from "@truealter/sdk";
 
 const config = generateGenericMcpConfig({
-  endpoint: "https://mcp.truealter.com",
+  endpoint: "https://mcp.truealter.com/api/v1/mcp",
   apiKey: process.env.ALTER_API_KEY,
   serverName: "alter", // editor-specific key under mcpServers
 });
@@ -295,7 +296,7 @@ const signer: X402Signer = {
 };
 
 const alter = new AlterClient({
-  endpoint: "https://mcp.truealter.com",
+  endpoint: "https://mcp.truealter.com/api/v1/mcp",
   x402: new X402Client({
     signer,
     networks: ["base", "base-sepolia"], // policy allow-list
@@ -380,7 +381,7 @@ When the local-daemon adapter ships:
 - **Cost:** zero on cached responses — x402 settlement is skipped.
 - **Provenance:** the daemon re-signs responses with its locally-bound ES256 key, so downstream verification remains uniform.
 
-Until then, use `endpoint: "https://mcp.truealter.com"` (the default) and the SDK behaves identically across Node, Deno, Bun, Cloudflare Workers, and the browser.
+Until then, use `endpoint: "https://mcp.truealter.com/api/v1/mcp"` (the default) and the SDK behaves identically across Node, Deno, Bun, Cloudflare Workers, and the browser.
 
 ## Tools
 

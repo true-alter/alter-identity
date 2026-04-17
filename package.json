@@ -1,7 +1,7 @@
 {
   "name": "@truealter/sdk",
-  "version": "0.2.2",
-  "description": "ALTER Identity SDK — query the continuous identity field from any JavaScript/TypeScript environment",
+  "version": "0.2.4",
+  "description": "ALTER Identity SDK — query the continuous identity field from any JavaScript/TypeScript environment. TypeScript client for mcp.truealter.com with x402 micropayments, ES256 provenance verification, and ~handle resolution.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -48,21 +48,30 @@
   "keywords": [
     "alter",
     "identity",
+    "identity-infrastructure",
     "mcp",
+    "mcp-server",
+    "mcp-client",
+    "model-context-protocol",
     "ai-agent",
+    "agent-identity",
     "x402",
     "psychometric",
     "provenance",
     "ed25519",
-    "es256"
+    "es256",
+    "identity-field",
+    "belonging-probability",
+    "trait-vector",
+    "anthropic",
+    "claude"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/true-alter/alter.git",
-    "directory": "packages/alter-identity"
+    "url": "https://github.com/true-alter/alter-identity.git"
   },
   "homepage": "https://truealter.com",
   "bugs": {
-    "url": "https://github.com/true-alter/alter/issues"
+    "url": "https://github.com/true-alter/alter-identity/issues"
   }
 }
